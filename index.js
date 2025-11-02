@@ -1,20 +1,20 @@
+// ...existing code...
+import "dotenv/config";
 import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import authRouter from "./src/routes/auth.route.js";
+import authRoutes from "./src/routes/auth.route.js";
+import classRoutes from "./src/routes/classes.route.js";
+import questionRoutes from "./src/routes/questions.route.js";
 
-dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(cors());
 app.use(express.json());
-app.use("/auth", authRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/auth", authRoutes);
+app.use("/classes", classRoutes);
+app.use("/questions", questionRoutes);
 
+app.get("/", (req, res) => res.send("OK"));
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server listening: http://localhost:${PORT}`);
 });
